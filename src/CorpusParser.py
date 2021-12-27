@@ -7,10 +7,10 @@ from src.DocxParser import DocxParser
 class CorpusParser:
     def __init__(self, corpus_path):
         self.corpus_path = corpus_path
-        self.document_hashes = {}
-        self.hash_count = 0
 
     def parse_corpus(self):
+        self.document_hashes = {}
+        self.hash_count = 0
         self._hash_documents()
         doc_paths = []
         doc_texts = []
@@ -33,7 +33,7 @@ class CorpusParser:
             'doc_text': doc_texts,
             'img_dir': img_dirs
             })
-        self.corpus_text.to_csv('corpus_text.tsv', sep='\t')
+        self.corpus_text.to_csv('src/corpus_text.tsv', sep='\t')
 
     def _hash_documents(self):
         for doc in os.listdir(self.corpus_path):

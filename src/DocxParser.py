@@ -7,7 +7,8 @@ import os
 nsmap = {'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main',
          'a': 'http://schemas.openxmlformats.org/drawingml/2006/main',
          'r': 'http://schemas.openxmlformats.org/officeDocument/2006/relationships',
-         'ir': 'http://schemas.openxmlformats.org/package/2006/relationships'}
+         'ir': 'http://schemas.openxmlformats.org/package/2006/relationships',
+         'irc': 'http://schemas.openxmlformats.org/officeDocument/2006/relationships'}
 
 
 class DocxParser:
@@ -44,7 +45,8 @@ class DocxParser:
                 text += '\n\n'
             elif child.tag == self._qn("w:drawing"):
                 rId = self._get_image_rIds(child)
-                text += self.image_rIds[rId] if rId is not None else ''
+                if rId is not None:
+                    text += self.image_rIds[rId] if rId is not None else ''
         return text
 
 
@@ -93,8 +95,11 @@ class DocxParser:
 
 
     def _get_image_rIds(self, element):
+        #TODO: fix function, make it exact instead of pop
         for child in element.iter():
             if child.tag == self._qn("a:blip"):
-                rId = child.attrib.popitem()[1]
-                return rId
+                a = self._qn("irc:embed")
+                if a in child.attrib.keys():
+                    return child.attrib[a]
+                return None
 

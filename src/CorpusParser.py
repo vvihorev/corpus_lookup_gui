@@ -9,7 +9,6 @@ class CorpusParser:
         self.corpus_path = corpus_path
         self.document_hashes = {}
         self.hash_count = 0
-        self.parse_corpus()
 
     def parse_corpus(self):
         self._hash_documents()
@@ -25,6 +24,7 @@ class CorpusParser:
             doc_paths.append(doc_path)
             doc_text = self._parse_document(doc_path, img_dir)
             doc_text = doc_text.replace('media/', img_dir+'/')
+            doc_text = '\n'.join([line for line in doc_text.split('\n') if line != ''])
             doc_texts.append(doc_text)
             img_dirs.append(img_dir)
 

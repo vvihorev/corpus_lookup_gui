@@ -1,15 +1,15 @@
 import os
+import re
 import pandas as pd
 
 
 class CorpusSearcher:
     def __init__(self, corpus_parser):
-        if os.path.exists('corpus_text.tsv'):
-            self.corpus_text = pd.read_csv('corpus_text.tsv', sep='\t')
+        if os.path.exists('src/corpus_text.tsv'):
+            self.corpus_text = pd.read_csv('src/corpus_text.tsv', sep='\t')
         else:
             corpus_parser.parse_corpus()
             self.corpus_text = corpus_parser.corpus_text
-
 
     def search_corpus(self, query):
         doc_paths = []
@@ -49,6 +49,8 @@ class CorpusSearcher:
             if count == 2:
                 break
             if text[i].find('media') != -1:
-                res.append(text[i])
+                match = re.split(r'media| ', text[i])
+                match = ['media' + x for x in match if '/' in x]
+                res += match
                 count += 1
         return res

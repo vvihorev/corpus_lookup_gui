@@ -12,9 +12,8 @@ from src.CorpusSearcher import CorpusSearcher
 from src.HTMLBuilder import HTMLBuilder
 
 
-# TODO: limit number of appearances and images
+# TODO: limit number of appearances
 # TODO: link images to appearances somehow?
-# TODO: inline small images are broken, commas after their names
 
 
 def _searchCallBack():

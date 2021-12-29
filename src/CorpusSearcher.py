@@ -28,6 +28,7 @@ class CorpusSearcher:
                         appearances.append(doc_text[i])
                         count += 1
                         images += self.get_relevant_images(doc_text[i:])
+                images = list(set(images))
 
                 doc_paths.append(row['doc_path'])
                 doc_appearances.append(appearances)
@@ -49,8 +50,10 @@ class CorpusSearcher:
             if count == 2:
                 break
             if text[i].find('media') != -1:
-                match = re.split(r'media| ', text[i])
-                match = ['media' + x for x in match if '/' in x]
+                # match = re.split(r'[ .](media)|[, ]', text[i])
+                # match = [x for x in filter((lambda x: x is not None), match)]
+                # match = [x for x in match if '/' in x]
+                match = [x[x.find('media'):] for x in text[i].split(' ') if re.search(r'media(.+)', x)]
                 res += match
                 count += 1
         return res

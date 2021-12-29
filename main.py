@@ -14,6 +14,7 @@ from src.HTMLBuilder import HTMLBuilder
 
 # TODO: limit number of appearances and images
 # TODO: link images to appearances somehow?
+# TODO: inline small images are broken, commas after their names
 
 
 def _searchCallBack():

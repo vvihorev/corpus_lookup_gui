@@ -95,7 +95,6 @@ class DocxParser:
 
 
     def _get_image_rIds(self, element):
-        #TODO: fix function, make it exact instead of pop
         for child in element.iter():
             if child.tag == self._qn("a:blip"):
                 a = self._qn("irc:embed")

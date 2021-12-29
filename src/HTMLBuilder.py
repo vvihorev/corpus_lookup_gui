@@ -33,6 +33,7 @@ class HTMLBuilder:
             row[1] = self.tag('b', self.tag('p', doc_name)) + row[1]
 
         res += self.table(rows)
+        res = self.highlight_word(query, res)
         
         with open('index.html', 'w') as file:
             file.write(res)
@@ -47,7 +48,8 @@ class HTMLBuilder:
         return '<a href="{0}">{1}</a>'.format(link, text)
 
     def img(self, src, width=200):
-        return '<img src="{0}" width="{1}">'.format(src, width)
+        # return '<img src="{0}" style="max_width:{1}; width:auto;">'.format(src, width)
+        return '<img src="{0}" style="max-width:200px;width: expression(this.width > 200 ? 200: true);">'.format(src, width)
     
     def table(self, rows):
         res = ''
@@ -56,4 +58,8 @@ class HTMLBuilder:
         res = self.tag("table", res, [("border", "2px")])
         return res
 
+    def highlight_word(self, word, text):
+        highlight = '<span style="background-color: #a4b3f1;">' + word + '</span>'
+        res = text.replace(word, highlight)
+        return res
 
